@@ -1,6 +1,7 @@
 package com.analyze.fileanalyzer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,11 +13,15 @@ public class Main {
 
     public void createMainWindow() {
         JFrame frame = new JFrame("File analyzer");
+        frame.setLayout(null);
+        frame.setSize(620, 410);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        ImageIcon imageBackground = new ImageIcon("D:/WORD/UNI/Магистър/FinalProject/FileAnalyzer/src/main/resources/app-background.jpg");
+//        JLabel background = new JLabel("", imageBackground, JLabel.CENTER);
+//        background.setBounds(0,0,620,410);
+//        frame.add(background);
         frame.setContentPane(panelMain);
         createUI(frame);
-        frame.setSize(560, 350);
-        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
