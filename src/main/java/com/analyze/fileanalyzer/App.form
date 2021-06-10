@@ -114,6 +114,8 @@
                 <constraints/>
                 <properties>
                   <text value=""/>
+                  <verticalAlignment value="1"/>
+                  <verticalTextPosition value="1"/>
                 </properties>
               </component>
             </children>

@@ -27,10 +27,8 @@ public class App {
     private JButton buttonTika;
     private JLabel labelSelectedFile;
     private JPanel panelTika;
-    private JTextArea panelTikaTextArea;
     private JButton panelTikaGoBackButton;
     private JLabel panelTikaLabel;
-    private JTextArea panelTikaMetadataTextArea;
     private JLabel panelTikaMetadataLabel;
     private JFrame frame;
     private File file;
@@ -130,6 +128,17 @@ public class App {
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+            }
+        });
+        panelTikaGoBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                panelApp.removeAll();
+                panelApp.repaint();
+                panelApp.revalidate();
+
+                panelApp.add(panelFileMenu);
+                panelApp.repaint();
+                panelApp.revalidate();
             }
         });
     }
