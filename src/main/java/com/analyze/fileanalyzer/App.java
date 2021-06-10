@@ -105,10 +105,11 @@ public class App {
 
                     //getting the list of all meta data elements
                     String[] metadataNames = metadata.names();
-                    String metadataText = "";
+                    String metadataText = "<html>";
                     for(String name : metadataNames) {
-                        metadataText = metadataText.concat(name + ": " + metadata.get(name) + "\n");
+                        metadataText = metadataText.concat(name + ": " + metadata.get(name) + "<br>");
                     }
+                    metadataText.concat("</html>");
 
                     panelTikaLabel.setText("The metadata of file " + file.getName());
                     panelApp.removeAll();
@@ -119,7 +120,7 @@ public class App {
                     panelApp.repaint();
                     panelApp.revalidate();
 
-                    panelTikaMetadataTextArea.setText(metadataText);
+                    panelTikaMetadataLabel.setText(metadataText);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 } catch (SAXException saxException) {

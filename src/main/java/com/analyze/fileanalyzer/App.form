@@ -110,9 +110,11 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="201e0" class="javax.swing.JTextArea" binding="panelTikaMetadataTextArea">
+              <component id="92737" class="javax.swing.JLabel" binding="panelTikaMetadataLabel">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <text value=""/>
+                </properties>
               </component>
             </children>
           </scrollpane>
