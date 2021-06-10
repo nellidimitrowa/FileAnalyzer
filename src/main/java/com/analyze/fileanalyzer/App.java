@@ -4,6 +4,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.AutoDetectParser;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.xml.sax.SAXException;
 
 public class App {
     private JPanel panelApp;
@@ -15,7 +26,14 @@ public class App {
     private JButton buttonAnotherFile;
     private JButton buttonTika;
     private JLabel labelSelectedFile;
+    private JPanel panelTika;
+    private JTextArea panelTikaTextArea;
+    private JButton panelTikaGoBackButton;
+    private JLabel panelTikaLabel;
+    private JTextArea panelTikaMetadataTextArea;
+    private JLabel panelTikaMetadataLabel;
     private JFrame frame;
+    private File file;
 
     public static void main(String[] args) {
         App app = new App();
@@ -47,7 +65,7 @@ public class App {
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                 int option = fileChooser.showOpenDialog(frame);
                 if(option == JFileChooser.APPROVE_OPTION){
-                    File file = fileChooser.getSelectedFile();
+                    file = fileChooser.getSelectedFile();
                     labelSelectedFile.setText("Selected: " + file.getName());
                     panelApp.removeAll();
                     panelApp.repaint();
@@ -61,6 +79,7 @@ public class App {
                 }
             }
         });
+
         buttonAnotherFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 panelApp.removeAll();
@@ -70,6 +89,46 @@ public class App {
                 panelApp.add(panelMain);
                 panelApp.repaint();
                 panelApp.revalidate();
+            }
+        });
+
+        buttonTika.addActionListener(new ActionListener()  {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Parser parser = new AutoDetectParser();
+                    BodyContentHandler handler = new BodyContentHandler();
+                    Metadata metadata = new Metadata();
+                    FileInputStream inputstream = new FileInputStream(file);
+                    ParseContext context = new ParseContext();
+
+                    parser.parse(inputstream, handler, metadata, context);
+
+                    //getting the list of all meta data elements
+                    String[] metadataNames = metadata.names();
+                    String metadataText = "";
+                    for(String name : metadataNames) {
+                        metadataText = metadataText.concat(name + ": " + metadata.get(name) + "\n");
+                    }
+
+                    panelTikaLabel.setText("The metadata of file " + file.getName());
+                    panelApp.removeAll();
+                    panelApp.repaint();
+                    panelApp.revalidate();
+
+                    panelApp.add(panelTika);
+                    panelApp.repaint();
+                    panelApp.revalidate();
+
+                    panelTikaMetadataTextArea.setText(metadataText);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                } catch (SAXException saxException) {
+                    saxException.printStackTrace();
+                } catch (TikaException tikaException) {
+                    tikaException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
     }
