@@ -3,11 +3,15 @@ package com.analyze.fileanalyzer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 
+import org.apache.solr.client.solrj.SolrClient;
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -139,6 +143,49 @@ public class App {
                 panelApp.add(panelFileMenu);
                 panelApp.repaint();
                 panelApp.revalidate();
+            }
+        });
+        buttonSolr.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String serverURL = "http://localhost:8983/solr";
+                SolrClient client = new HttpSolrClient.Builder(serverURL).build();
+                String collectionName = "test";
+                String fileOpen = "D:\\WORD\\UNI\\mag\\semester2\\slr_csv\\autoQuery1.txt";
+                try {
+
+                    File file = new File(fileOpen);
+                    BufferedReader buffreader = new BufferedReader(new FileReader(file));
+                    String readLine = "";
+                    System.out.println("Reading queries from file!");
+
+                    while ((readLine = buffreader.readLine()) != null) {
+                        final SolrQuery query = new SolrQuery();
+                        query.setQuery(readLine);
+                        query.setRows(10);
+
+                        final QueryResponse response = client.query(collectionName, query);
+                        final SolrDocumentList doc_list = response.getResults();
+                        System.out.println("Query: { "+readLine+" }");
+                        System.out.println("Found " + doc_list.getNumFound() + " documents");
+                        for(SolrDocument document : doc_list) {
+                            final String time = (String) document.getFirstValue("Time");
+                            final String component = (String) document.getFirstValue("Component");
+                            final String description = (String) document.getFirstValue("Description");
+                            final String origin = (String) document.getFirstValue("Origin");
+                            final String event_ctx = (String) document.getFirstValue("Event_context");
+                            final String event_name = (String) document.getFirstValue("Event_name");
+                            final String ip = (String) document.getFirstValue("IP_address");
+
+                            System.out.println("{Time: " + time + "; Component: " + component + "; Description: "+ description + "; Origin: "+ origin +
+                                    "; Event_context: " + event_ctx + "; Event_name: " + event_name + "; IP_address: " + ip + "}");
+                        }
+                        System.out.println("");
+                    }
+                } catch (IOException exception) {
+                    System.out.println("Error reading file!");
+                } catch (SolrServerException solrServerException) {
+                    solrServerException.printStackTrace();
+                }
             }
         });
     }

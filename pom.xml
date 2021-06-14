@@ -19,6 +19,21 @@
             <artifactId>tika-parsers</artifactId>
             <version>1.21</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>8.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>8.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.25</version>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.apache.tika</groupId>-->
 <!--            <artifactId>tika</artifactId>-->
