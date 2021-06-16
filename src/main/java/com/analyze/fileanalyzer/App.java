@@ -171,6 +171,7 @@ public class App {
                 String fileOpen = textFieldQuery.getText();
                 try {
                     File file = new File(fileOpen);
+                    String text = "<html>";
                     BufferedReader buffreader = new BufferedReader(new FileReader(file));
                     String readLine = "";
                     while ((readLine = buffreader.readLine()) != null) {
@@ -180,17 +181,18 @@ public class App {
 
                         final QueryResponse response = client.query(collectionName,query);
                         final SolrDocumentList docs = response.getResults();
-//                        System.out.println("Query: { "+readLine+" }");
-                        panelSolrIndexedDataLabel.setText(docs.toString());
-
-                        panelApp.removeAll();
-                        panelApp.repaint();
-                        panelApp.revalidate();
-
-                        panelApp.add(panelSolrData);
-                        panelApp.repaint();
-                        panelApp.revalidate();
+                        text = text.concat(docs.toString() + "<br>");
                     }
+                    text.concat("</html>");
+                    panelSolrIndexedDataLabel.setText(text);
+
+                    panelApp.removeAll();
+                    panelApp.repaint();
+                    panelApp.revalidate();
+
+                    panelApp.add(panelSolrData);
+                    panelApp.repaint();
+                    panelApp.revalidate();
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 } catch (SolrServerException solrServerException) {
