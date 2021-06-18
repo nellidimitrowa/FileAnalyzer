@@ -84,12 +84,6 @@ public class App {
             }
         });
 
-        buttonAnotherFile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelMain);
-            }
-        });
-
         buttonTika.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -122,16 +116,7 @@ public class App {
                 }
             }
         });
-        panelTikaGoBackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelFileMenu);
-            }
-        });
-        buttonSolr.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelSolr);
-            }
-        });
+
         buttonExecuteTika.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String serverURL = "http://localhost:8983/solr";
@@ -166,11 +151,31 @@ public class App {
 
             }
         });
+
+        buttonAnotherFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelMain);
+            }
+        });
+
+        panelTikaGoBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelFileMenu);
+            }
+        });
+
+        buttonSolr.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelSolr);
+            }
+        });
+
         panelSolrDataGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelSolr);
             }
         });
+        
         goBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelFileMenu);
