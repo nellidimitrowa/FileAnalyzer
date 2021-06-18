@@ -41,8 +41,11 @@ public class App {
     private JButton panelSolrDataGoBackButton;
     private JLabel panelSolrDataLabel;
     private JLabel panelSolrIndexedDataLabel;
+    private JButton goBackButton;
     private JFrame frame;
     private File file;
+
+    Navigation navigation = new Navigation(panelApp);
 
     public static void main(String[] args) {
         App app = new App();
@@ -63,10 +66,7 @@ public class App {
     }
 
     public App() {
-        panelApp.removeAll();
-        panelApp.add(panelMain);
-        panelApp.repaint();
-        panelApp.revalidate();
+        navigation.navigateTo(panelMain);
 
         buttonChooseFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -76,13 +76,8 @@ public class App {
                 if(option == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
                     labelSelectedFile.setText("Selected: " + file.getName());
-                    panelApp.removeAll();
-                    panelApp.repaint();
-                    panelApp.revalidate();
 
-                    panelApp.add(panelFileMenu);
-                    panelApp.repaint();
-                    panelApp.revalidate();
+                    navigation.navigateTo(panelFileMenu);
                 } else {
                     labelHello.setText("Open command canceled");
                 }
@@ -91,13 +86,7 @@ public class App {
 
         buttonAnotherFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                panelApp.removeAll();
-                panelApp.repaint();
-                panelApp.revalidate();
-
-                panelApp.add(panelMain);
-                panelApp.repaint();
-                panelApp.revalidate();
+                navigation.navigateTo(panelMain);
             }
         });
 
@@ -109,7 +98,6 @@ public class App {
                     Metadata metadata = new Metadata();
                     FileInputStream inputstream = new FileInputStream(file);
                     ParseContext context = new ParseContext();
-
                     parser.parse(inputstream, handler, metadata, context);
 
                     //getting the list of all meta data elements
@@ -121,14 +109,7 @@ public class App {
                     metadataText.concat("</html>");
 
                     panelTikaLabel.setText("The metadata of file " + file.getName());
-                    panelApp.removeAll();
-                    panelApp.repaint();
-                    panelApp.revalidate();
-
-                    panelApp.add(panelTika);
-                    panelApp.repaint();
-                    panelApp.revalidate();
-
+                    navigation.navigateTo(panelTika);
                     panelTikaMetadataLabel.setText(metadataText);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
@@ -143,24 +124,12 @@ public class App {
         });
         panelTikaGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                panelApp.removeAll();
-                panelApp.repaint();
-                panelApp.revalidate();
-
-                panelApp.add(panelFileMenu);
-                panelApp.repaint();
-                panelApp.revalidate();
+                navigation.navigateTo(panelFileMenu);
             }
         });
         buttonSolr.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                panelApp.removeAll();
-                panelApp.repaint();
-                panelApp.revalidate();
-
-                panelApp.add(panelSolr);
-                panelApp.repaint();
-                panelApp.revalidate();
+                navigation.navigateTo(panelSolr);
             }
         });
         buttonExecuteTika.addActionListener(new ActionListener() {
@@ -186,13 +155,7 @@ public class App {
                     text.concat("</html>");
                     panelSolrIndexedDataLabel.setText(text);
 
-                    panelApp.removeAll();
-                    panelApp.repaint();
-                    panelApp.revalidate();
-
-                    panelApp.add(panelSolrData);
-                    panelApp.repaint();
-                    panelApp.revalidate();
+                    navigation.navigateTo(panelSolrData);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 } catch (SolrServerException solrServerException) {
@@ -201,6 +164,16 @@ public class App {
                     ioException.printStackTrace();
                 }
 
+            }
+        });
+        panelSolrDataGoBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelSolr);
+            }
+        });
+        goBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelFileMenu);
             }
         });
     }
