@@ -23,20 +23,20 @@ public class App {
     private JPanel panelApp;
     private JPanel panelMain;
     private JPanel panelFileMenu;
-    private JButton buttonChooseFile;
-    private JButton buttonSolr;
-    private JLabel labelHello;
-    private JButton buttonAnotherFile;
-    private JButton buttonTika;
-    private JLabel labelSelectedFile;
+    private JButton chooseFileButton;
+    private JButton solrButton;
+    private JLabel helloLabel;
+    private JButton chooseAnotherFileButton;
+    private JButton tikaButton;
+    private JLabel selectedFileLabel;
     private JPanel panelTika;
     private JButton panelTikaGoBackButton;
     private JLabel panelTikaLabel;
     private JLabel panelTikaMetadataLabel;
     private JPanel panelSolr;
-    private JButton buttonExecuteTika;
-    private JTextField textFieldCollectionName;
-    private JTextField textFieldQuery;
+    private JButton executeTikaButton;
+    private JTextField solrCollectionNameTextField;
+    private JTextField solrQueryTextField;
     private JPanel panelSolrData;
     private JButton panelSolrDataGoBackButton;
     private JLabel panelSolrDataLabel;
@@ -68,23 +68,23 @@ public class App {
     public App() {
         navigation.navigateTo(panelMain);
 
-        buttonChooseFile.addActionListener(new ActionListener() {
+        chooseFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                 int option = fileChooser.showOpenDialog(frame);
                 if(option == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
-                    labelSelectedFile.setText("Selected: " + file.getName());
+                    selectedFileLabel.setText("Selected: " + file.getName());
 
                     navigation.navigateTo(panelFileMenu);
                 } else {
-                    labelHello.setText("Open command canceled");
+                    helloLabel.setText("Open command canceled");
                 }
             }
         });
 
-        buttonTika.addActionListener(new ActionListener()  {
+        tikaButton.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Parser parser = new AutoDetectParser();
@@ -117,12 +117,12 @@ public class App {
             }
         });
 
-        buttonExecuteTika.addActionListener(new ActionListener() {
+        executeTikaButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String serverURL = "http://localhost:8983/solr";
                 SolrClient client = new HttpSolrClient.Builder(serverURL).build();
-                String collectionName = textFieldCollectionName.getText();
-                String fileOpen = textFieldQuery.getText();
+                String collectionName = solrCollectionNameTextField.getText();
+                String fileOpen = solrQueryTextField.getText();
                 try {
                     File file = new File(fileOpen);
                     String text = "<html>";
@@ -152,7 +152,7 @@ public class App {
             }
         });
 
-        buttonAnotherFile.addActionListener(new ActionListener() {
+        chooseAnotherFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelMain);
             }
@@ -164,7 +164,7 @@ public class App {
             }
         });
 
-        buttonSolr.addActionListener(new ActionListener() {
+        solrButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelSolr);
             }
@@ -175,7 +175,7 @@ public class App {
                 navigation.navigateTo(panelSolr);
             }
         });
-        
+
         goBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelFileMenu);

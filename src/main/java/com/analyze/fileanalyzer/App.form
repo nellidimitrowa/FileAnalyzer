@@ -15,7 +15,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="cf6cd" class="javax.swing.JButton" binding="buttonChooseFile">
+          <component id="cf6cd" class="javax.swing.JButton" binding="chooseFileButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -23,7 +23,7 @@
               <text value="Click to choose file"/>
             </properties>
           </component>
-          <component id="3ce35" class="javax.swing.JLabel" binding="labelHello">
+          <component id="3ce35" class="javax.swing.JLabel" binding="helloLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -41,7 +41,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="2b9fc" class="javax.swing.JButton" binding="buttonAnotherFile">
+          <component id="2b9fc" class="javax.swing.JButton" binding="chooseAnotherFileButton">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -49,7 +49,7 @@
               <text value="Choose another file"/>
             </properties>
           </component>
-          <component id="922e8" class="javax.swing.JButton" binding="buttonSolr">
+          <component id="922e8" class="javax.swing.JButton" binding="solrButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -57,7 +57,7 @@
               <text value="Index and search"/>
             </properties>
           </component>
-          <component id="9d471" class="javax.swing.JButton" binding="buttonTika">
+          <component id="9d471" class="javax.swing.JButton" binding="tikaButton">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -65,7 +65,7 @@
               <text value="View metadata"/>
             </properties>
           </component>
-          <component id="bbcb3" class="javax.swing.JLabel" binding="labelSelectedFile">
+          <component id="bbcb3" class="javax.swing.JLabel" binding="selectedFileLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="28" height="136"/>
@@ -130,7 +130,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="2b4da" class="javax.swing.JButton" binding="buttonExecuteTika">
+          <component id="2b4da" class="javax.swing.JButton" binding="executeTikaButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -140,7 +140,7 @@
           </component>
           <component id="70bf9" class="javax.swing.JLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Collection name:"/>
@@ -148,13 +148,13 @@
           </component>
           <component id="418f1" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Query:"/>
             </properties>
           </component>
-          <component id="1dac3" class="javax.swing.JTextField" binding="textFieldCollectionName">
+          <component id="1dac3" class="javax.swing.JTextField" binding="solrCollectionNameTextField">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -162,7 +162,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="1009e" class="javax.swing.JTextField" binding="textFieldQuery">
+          <component id="1009e" class="javax.swing.JTextField" binding="solrQueryTextField">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
