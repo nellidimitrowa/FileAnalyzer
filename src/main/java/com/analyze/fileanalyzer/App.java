@@ -47,27 +47,17 @@ public class App {
     private File file;
 
     Navigation navigation = new Navigation(panelApp);
+    static DatabaseQuery databaseQuery = new DatabaseQuery();
+    static Connection connection = null;
 
     public static void main(String[] args) {
         App app = new App();
         app.createApp();
-
-        Connection connection = null;
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileanalyzer?allowPublicKeyRetrieval=true&useSSL=false", "root", "111697");
-            String query = "select * from fileanalyzer.tika;";
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                System.out.printf("%s \t\t%s \t\t\t%s \n",
-                        resultSet.getString("id"),
-                        resultSet.getString("filename"),
-                        resultSet.getString("metadata"));
-            }
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileanalyzer?allowPublicKeyRetrieval=true&useSSL=false", "root", "pass");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public void createApp() {
@@ -123,6 +113,8 @@ public class App {
                     panelTikaLabel.setText("The metadata of file " + file.getName());
                     navigation.navigateTo(panelTika);
                     panelTikaMetadataLabel.setText(metadataText);
+                    databaseQuery.insertQuery("insert into fileanalyzer.tika (filename, metadata) values ('" + file.getPath() + "', '" + metadataText + "')", connection);
+                    databaseQuery.getAllResults(connection);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 } catch (SAXException saxException) {
