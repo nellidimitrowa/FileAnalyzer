@@ -7,33 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="b1f9d" binding="panelMain" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <card name="Card1"/>
-        </constraints>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="cf6cd" class="javax.swing.JButton" binding="chooseFileButton">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Click to choose file"/>
-            </properties>
-          </component>
-          <component id="3ce35" class="javax.swing.JLabel" binding="helloLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Hello in File Analyzer"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
-      <grid id="13703" binding="panelFileMenu" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="13703" binding="panelMain" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <card name="Card2"/>
@@ -41,20 +15,12 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="2b9fc" class="javax.swing.JButton" binding="chooseAnotherFileButton">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Choose another file"/>
-            </properties>
-          </component>
           <component id="922e8" class="javax.swing.JButton" binding="solrButton">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Index and search"/>
+              <text value="View data for ABT course"/>
             </properties>
           </component>
           <component id="9d471" class="javax.swing.JButton" binding="tikaButton">
@@ -62,17 +28,17 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="View metadata"/>
+              <text value="View metadata of a file you will choose"/>
             </properties>
           </component>
-          <component id="bbcb3" class="javax.swing.JLabel" binding="selectedFileLabel">
+          <component id="bbcb3" class="javax.swing.JLabel" binding="helloLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="28" height="136"/>
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
+              <text value="Hello in File Analyzer"/>
             </properties>
           </component>
         </children>
@@ -122,7 +88,7 @@
           </scrollpane>
         </children>
       </grid>
-      <grid id="a8c51" binding="panelSolr" layout-manager="GridLayoutManager" row-count="4" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="a8c51" binding="panelSolr" layout-manager="GridLayoutManager" row-count="3" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <card name="Card4"/>
@@ -130,52 +96,31 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="2b4da" class="javax.swing.JButton" binding="executeTikaButton">
+          <component id="2b4da" class="javax.swing.JButton" binding="executeSolrButton">
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Execute indexing"/>
             </properties>
           </component>
-          <component id="70bf9" class="javax.swing.JLabel">
+          <component id="59490" class="javax.swing.JButton" binding="panelSolrGoBackButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Collection name:"/>
-            </properties>
-          </component>
-          <component id="418f1" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Query:"/>
-            </properties>
-          </component>
-          <component id="1dac3" class="javax.swing.JTextField" binding="solrCollectionNameTextField">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="1009e" class="javax.swing.JTextField" binding="solrQueryTextField">
-            <constraints>
-              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="59490" class="javax.swing.JButton" binding="goBackButton" default-binding="true">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="Go back"/>
+            </properties>
+          </component>
+          <component id="30679" class="javax.swing.JComboBox" binding="collectionNameComboBox">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="l"/>
+                <item value="ll"/>
+              </model>
             </properties>
           </component>
         </children>

@@ -23,26 +23,23 @@ import org.xml.sax.SAXException;
 public class App {
     private JPanel panelApp;
     private JPanel panelMain;
-    private JPanel panelFileMenu;
-    private JButton chooseFileButton;
     private JButton solrButton;
-    private JLabel helloLabel;
-    private JButton chooseAnotherFileButton;
     private JButton tikaButton;
-    private JLabel selectedFileLabel;
+    private JLabel helloLabel;
     private JPanel panelTika;
     private JButton panelTikaGoBackButton;
     private JLabel panelTikaLabel;
     private JLabel panelTikaMetadataLabel;
     private JPanel panelSolr;
-    private JButton executeTikaButton;
+    private JButton executeSolrButton;
     private JTextField solrCollectionNameTextField;
     private JTextField solrQueryTextField;
     private JPanel panelSolrData;
     private JButton panelSolrDataGoBackButton;
     private JLabel panelSolrDataLabel;
     private JLabel panelSolrIndexedDataLabel;
-    private JButton goBackButton;
+    private JButton panelSolrGoBackButton;
+    private JComboBox collectionNameComboBox;
     private JFrame frame;
     private File file;
 
@@ -54,7 +51,7 @@ public class App {
         App app = new App();
         app.createApp();
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileanalyzer?allowPublicKeyRetrieval=true&useSSL=false", "root", "pass");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileanalyzer?allowPublicKeyRetrieval=true&useSSL=false", "root", "111697");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -76,63 +73,54 @@ public class App {
     public App() {
         navigation.navigateTo(panelMain);
 
-        chooseFileButton.addActionListener(new ActionListener() {
+        tikaButton.addActionListener(new ActionListener()  {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
                 int option = fileChooser.showOpenDialog(frame);
                 if(option == JFileChooser.APPROVE_OPTION){
                     file = fileChooser.getSelectedFile();
-                    selectedFileLabel.setText("Selected: " + file.getName());
-
-                    navigation.navigateTo(panelFileMenu);
-                } else {
-                    helloLabel.setText("Open command canceled");
-                }
-            }
-        });
-
-        tikaButton.addActionListener(new ActionListener()  {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    Parser parser = new AutoDetectParser();
-                    BodyContentHandler handler = new BodyContentHandler();
-                    Metadata metadata = new Metadata();
-                    FileInputStream inputstream = new FileInputStream(file);
-                    ParseContext context = new ParseContext();
-                    parser.parse(inputstream, handler, metadata, context);
-
-                    //getting the list of all meta data elements
-                    String[] metadataNames = metadata.names();
-                    String metadataText = "<html>";
-                    for(String name : metadataNames) {
-                        metadataText = metadataText.concat(name + ": " + metadata.get(name) + "<br>");
-                    }
-                    metadataText.concat("</html>");
-
-                    panelTikaLabel.setText("The metadata of file " + file.getName());
                     navigation.navigateTo(panelTika);
-                    panelTikaMetadataLabel.setText(metadataText);
-                    databaseQuery.insertQuery("insert into fileanalyzer.tika (filename, metadata) values ('" + file.getPath() + "', '" + metadataText + "')", connection);
-                    databaseQuery.getAllResults(connection);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                } catch (SAXException saxException) {
-                    saxException.printStackTrace();
-                } catch (TikaException tikaException) {
-                    tikaException.printStackTrace();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    try {
+                        Parser parser = new AutoDetectParser();
+                        BodyContentHandler handler = new BodyContentHandler();
+                        Metadata metadata = new Metadata();
+                        FileInputStream inputstream = new FileInputStream(file);
+                        ParseContext context = new ParseContext();
+                        parser.parse(inputstream, handler, metadata, context);
+
+                        //getting the list of all meta data elements
+                        String[] metadataNames = metadata.names();
+                        String metadataText = "<html>";
+                        for(String name : metadataNames) {
+                            metadataText = metadataText.concat(name + ": " + metadata.get(name) + "<br>");
+                        }
+                        metadataText.concat("</html>");
+
+                        panelTikaLabel.setText("The metadata of file " + file.getName());
+                        navigation.navigateTo(panelTika);
+                        panelTikaMetadataLabel.setText(metadataText);
+//                        databaseQuery.insertQuery("insert into fileanalyzer.tika (filename, metadata) values ('" + file.getName() + "', '" + metadataText + "')", connection);
+//                        databaseQuery.getAllResults(connection);
+                    } catch (FileNotFoundException fileNotFoundException) {
+                        fileNotFoundException.printStackTrace();
+                    } catch (SAXException saxException) {
+                        saxException.printStackTrace();
+                    } catch (TikaException tikaException) {
+                        tikaException.printStackTrace();
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
                 }
             }
         });
 
-        executeTikaButton.addActionListener(new ActionListener() {
+        executeSolrButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String serverURL = "http://localhost:8983/solr";
                 SolrClient client = new HttpSolrClient.Builder(serverURL).build();
-                String collectionName = solrCollectionNameTextField.getText();
-                String fileOpen = solrQueryTextField.getText();
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
                 try {
                     File file = new File(fileOpen);
                     String text = "<html>";
@@ -162,21 +150,9 @@ public class App {
             }
         });
 
-        chooseAnotherFileButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelMain);
-            }
-        });
-
         panelTikaGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelFileMenu);
-            }
-        });
-
-        solrButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelSolr);
+                navigation.navigateTo(panelMain);
             }
         });
 
@@ -186,9 +162,15 @@ public class App {
             }
         });
 
-        goBackButton.addActionListener(new ActionListener() {
+        panelSolrGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelFileMenu);
+                navigation.navigateTo(panelMain);
+            }
+        });
+
+        solrButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelSolr);
             }
         });
     }
