@@ -1,16 +1,17 @@
 package com.analyze.fileanalyzer;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.sql.*;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
@@ -44,22 +45,14 @@ public class App {
     private File file;
 
     Navigation navigation = new Navigation(panelApp);
-    static DatabaseQuery databaseQuery = new DatabaseQuery();
-    static Connection connection = null;
 
     public static void main(String[] args) {
         App app = new App();
         app.createApp();
-        try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/fileanalyzer?allowPublicKeyRetrieval=true&useSSL=false", "root", "111697");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
     public void createApp() {
         frame = new JFrame("File analyzer");
-        frame.setLayout(null);
         frame.setSize(620, 410);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        ImageIcon imageBackground = new ImageIcon("D:/WORD/UNI/Магистър/FinalProject/FileAnalyzer/src/main/resources/app-background.jpg");
@@ -67,7 +60,23 @@ public class App {
 //        background.setBounds(0,0,620,410);
 //        frame.add(background);
         frame.setContentPane(panelApp);
+        panelApp.setBackground(Color.BLUE);
+        frame.getContentPane().setBackground(new Color(255, 235, 205));
+        setButtonIcons();
         frame.setVisible(true);
+    }
+
+    public void setButtonIcons() {
+        Icon tikaIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\Apache-Tika.png");
+        tikaButton.setIcon(tikaIcon);
+        Icon solrIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\solrlogo.png");
+        solrButton.setIcon(solrIcon);
+        Icon backButtonIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\back.png");
+        panelTikaGoBackButton.setIcon(backButtonIcon);
+        panelSolrGoBackButton.setIcon(backButtonIcon);
+        panelSolrDataGoBackButton.setIcon(backButtonIcon);
+        Icon viewAllDataIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\all-data.png");
+        executeSolrButton.setIcon(viewAllDataIcon);
     }
 
     public App() {
@@ -133,11 +142,18 @@ public class App {
 
                         final QueryResponse response = client.query(collectionName,query);
                         final SolrDocumentList docs = response.getResults();
-                        text = text.concat(docs.toString() + "<br>");
+                        for(SolrDocument doc : docs) {
+                            text = text.concat("File path: " + doc.getFieldValue("id") + "<br>");
+                            text = text.concat("Creation date: " + doc.getFieldValue("date") + "<br>");
+                            text = text.concat("Content type: " + doc.getFieldValue("stream_content_type") + "<br>");
+                            text = text.concat("Application name: " + doc.getFieldValue("application_name") + "<br>");
+                            text = text.concat("Author: " + doc.getFieldValue("last_author") + "<br>");
+                            text = text.concat("Language: " + doc.getFieldValue("dc_language") + "<br>");
+                            text = text.concat("<br>");
+                        }
                     }
                     text.concat("</html>");
                     panelSolrIndexedDataLabel.setText(text);
-
                     navigation.navigateTo(panelSolrData);
                 } catch (FileNotFoundException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();

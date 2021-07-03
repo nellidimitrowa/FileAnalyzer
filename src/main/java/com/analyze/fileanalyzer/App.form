@@ -23,14 +23,6 @@
               <text value="View data for ABT course"/>
             </properties>
           </component>
-          <component id="9d471" class="javax.swing.JButton" binding="tikaButton">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="View metadata of a file you will choose"/>
-            </properties>
-          </component>
           <component id="bbcb3" class="javax.swing.JLabel" binding="helloLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
@@ -39,6 +31,14 @@
             </constraints>
             <properties>
               <text value="Hello in File Analyzer"/>
+            </properties>
+          </component>
+          <component id="9d471" class="javax.swing.JButton" binding="tikaButton">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="View metadata of a file you will choose"/>
             </properties>
           </component>
         </children>
@@ -101,7 +101,7 @@
               <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Execute indexing"/>
+              <text value="View all data"/>
             </properties>
           </component>
           <component id="59490" class="javax.swing.JButton" binding="panelSolrGoBackButton">
@@ -146,7 +146,7 @@
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Choose another query"/>
+              <text value="Go back"/>
             </properties>
           </component>
           <scrollpane id="36fae">
