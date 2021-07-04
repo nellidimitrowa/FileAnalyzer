@@ -32,7 +32,7 @@ public class App {
     private JLabel panelTikaLabel;
     private JLabel panelTikaMetadataLabel;
     private JPanel panelSolr;
-    private JButton executeSolrButton;
+    private JButton viewAllDataButton;
     private JTextField solrCollectionNameTextField;
     private JTextField solrQueryTextField;
     private JPanel panelSolrData;
@@ -41,10 +41,13 @@ public class App {
     private JLabel panelSolrIndexedDataLabel;
     private JButton panelSolrGoBackButton;
     private JComboBox collectionNameComboBox;
+    private JButton viewBgDataButton;
+    private JButton viewEnDataButton;
     private JFrame frame;
     private File file;
 
     Navigation navigation = new Navigation(panelApp);
+    SolrExecution solr = new SolrExecution();
 
     public static void main(String[] args) {
         App app = new App();
@@ -63,6 +66,7 @@ public class App {
         panelApp.setBackground(Color.BLUE);
         frame.getContentPane().setBackground(new Color(255, 235, 205));
         setButtonIcons();
+        helloLabel.setFont(helloLabel.getFont().deriveFont(28.0f));
         frame.setVisible(true);
     }
 
@@ -76,7 +80,11 @@ public class App {
         panelSolrGoBackButton.setIcon(backButtonIcon);
         panelSolrDataGoBackButton.setIcon(backButtonIcon);
         Icon viewAllDataIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\all-data.png");
-        executeSolrButton.setIcon(viewAllDataIcon);
+        viewAllDataButton.setIcon(viewAllDataIcon);
+        Icon enIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\en.png");
+        viewEnDataButton.setIcon(enIcon);
+        Icon bgIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\bg.png");
+        viewBgDataButton.setIcon(bgIcon);
     }
 
     public App() {
@@ -124,45 +132,37 @@ public class App {
             }
         });
 
-        executeSolrButton.addActionListener(new ActionListener() {
+        viewAllDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String serverURL = "http://localhost:8983/solr";
-                SolrClient client = new HttpSolrClient.Builder(serverURL).build();
                 String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
-                try {
-                    File file = new File(fileOpen);
-                    String text = "<html>";
-                    BufferedReader buffreader = new BufferedReader(new FileReader(file));
-                    String readLine = "";
-                    while ((readLine = buffreader.readLine()) != null) {
-                        final SolrQuery query = new SolrQuery();
-                        query.setQuery(readLine);
-                        query.setRows(10);
+                String text = solr.executeSolr(fileOpen, collectionName, false);
 
-                        final QueryResponse response = client.query(collectionName,query);
-                        final SolrDocumentList docs = response.getResults();
-                        for(SolrDocument doc : docs) {
-                            text = text.concat("File path: " + doc.getFieldValue("id") + "<br>");
-                            text = text.concat("Creation date: " + doc.getFieldValue("date") + "<br>");
-                            text = text.concat("Content type: " + doc.getFieldValue("stream_content_type") + "<br>");
-                            text = text.concat("Application name: " + doc.getFieldValue("application_name") + "<br>");
-                            text = text.concat("Author: " + doc.getFieldValue("last_author") + "<br>");
-                            text = text.concat("Language: " + doc.getFieldValue("dc_language") + "<br>");
-                            text = text.concat("<br>");
-                        }
-                    }
-                    text.concat("</html>");
-                    panelSolrIndexedDataLabel.setText(text);
-                    navigation.navigateTo(panelSolrData);
-                } catch (FileNotFoundException fileNotFoundException) {
-                    fileNotFoundException.printStackTrace();
-                } catch (SolrServerException solrServerException) {
-                    solrServerException.printStackTrace();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+                panelSolrIndexedDataLabel.setText(text);
+                navigation.navigateTo(panelSolrData);
 
+            }
+        });
+
+        viewBgDataButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryBG.txt";
+                String text = solr.executeSolr(fileOpen, collectionName, false);
+
+                panelSolrIndexedDataLabel.setText(text);
+                navigation.navigateTo(panelSolrData);
+            }
+        });
+
+        viewEnDataButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryEN.txt";
+                String text = solr.executeSolr(fileOpen, collectionName, false);
+
+                panelSolrIndexedDataLabel.setText(text);
+                navigation.navigateTo(panelSolrData);
             }
         });
 
