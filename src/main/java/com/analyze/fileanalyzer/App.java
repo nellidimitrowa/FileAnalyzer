@@ -87,6 +87,16 @@ public class App {
         viewBgDataButton.setIcon(bgIcon);
     }
 
+    public void viewSolrData(String queryFilename) {
+        String collectionName = collectionNameComboBox.getSelectedItem().toString();
+        boolean isLogFile = false;
+        if(collectionName == "test") isLogFile = true;
+        String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
+
+        panelSolrIndexedDataLabel.setText(text);
+        navigation.navigateTo(panelSolrData);
+    }
+
     public App() {
         navigation.navigateTo(panelMain);
 
@@ -134,35 +144,22 @@ public class App {
 
         viewAllDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
-                String text = solr.executeSolr(fileOpen, collectionName, false);
-
-                panelSolrIndexedDataLabel.setText(text);
-                navigation.navigateTo(panelSolrData);
-
+                viewSolrData(fileOpen);
             }
         });
 
         viewBgDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryBG.txt";
-                String text = solr.executeSolr(fileOpen, collectionName, false);
-
-                panelSolrIndexedDataLabel.setText(text);
-                navigation.navigateTo(panelSolrData);
+                viewSolrData(fileOpen);
             }
         });
 
         viewEnDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryEN.txt";
-                String text = solr.executeSolr(fileOpen, collectionName, false);
-
-                panelSolrIndexedDataLabel.setText(text);
-                navigation.navigateTo(panelSolrData);
+                viewSolrData(fileOpen);
             }
         });
 
