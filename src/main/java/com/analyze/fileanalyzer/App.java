@@ -70,33 +70,6 @@ public class App {
         frame.setVisible(true);
     }
 
-    public void setButtonIcons() {
-        Icon tikaIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\Apache-Tika.png");
-        tikaButton.setIcon(tikaIcon);
-        Icon solrIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\solrlogo.png");
-        solrButton.setIcon(solrIcon);
-        Icon backButtonIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\back.png");
-        panelTikaGoBackButton.setIcon(backButtonIcon);
-        panelSolrGoBackButton.setIcon(backButtonIcon);
-        panelSolrDataGoBackButton.setIcon(backButtonIcon);
-        Icon viewAllDataIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\all-data.png");
-        viewAllDataButton.setIcon(viewAllDataIcon);
-        Icon enIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\en.png");
-        viewEnDataButton.setIcon(enIcon);
-        Icon bgIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\bg.png");
-        viewBgDataButton.setIcon(bgIcon);
-    }
-
-    public void viewSolrData(String queryFilename) {
-        String collectionName = collectionNameComboBox.getSelectedItem().toString();
-        boolean isLogFile = false;
-        if(collectionName == "test") isLogFile = true;
-        String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
-
-        panelSolrIndexedDataLabel.setText(text);
-        navigation.navigateTo(panelSolrData);
-    }
-
     public App() {
         navigation.navigateTo(panelMain);
 
@@ -186,5 +159,32 @@ public class App {
                 navigation.navigateTo(panelSolr);
             }
         });
+    }
+
+    public void setButtonIcons() {
+        Icon tikaIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\Apache-Tika.png");
+        tikaButton.setIcon(tikaIcon);
+        Icon solrIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\solrlogo.png");
+        solrButton.setIcon(solrIcon);
+        Icon backButtonIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\back.png");
+        panelTikaGoBackButton.setIcon(backButtonIcon);
+        panelSolrGoBackButton.setIcon(backButtonIcon);
+        panelSolrDataGoBackButton.setIcon(backButtonIcon);
+        Icon viewAllDataIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\all-data.png");
+        viewAllDataButton.setIcon(viewAllDataIcon);
+        Icon enIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\en.png");
+        viewEnDataButton.setIcon(enIcon);
+        Icon bgIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\bg.png");
+        viewBgDataButton.setIcon(bgIcon);
+    }
+
+    public void viewSolrData(String queryFilename) {
+        String collectionName = collectionNameComboBox.getSelectedItem().toString();
+        boolean isLogFile = false;
+        if(collectionName == "test") isLogFile = true;
+        String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
+
+        panelSolrIndexedDataLabel.setText(text);
+        navigation.navigateTo(panelSolrData);
     }
 }
