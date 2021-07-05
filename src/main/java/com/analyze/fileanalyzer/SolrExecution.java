@@ -19,9 +19,9 @@ public class SolrExecution {
         try {
             File file = new File(fileOpen);
             text = "<html>";
-            BufferedReader buffreader = new BufferedReader(new FileReader(file));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String readLine = "";
-            while ((readLine = buffreader.readLine()) != null) {
+            while ((readLine = bufferedReader.readLine()) != null) {
                 final SolrQuery query = new SolrQuery();
                 query.setQuery(readLine);
                 query.setRows(10);
