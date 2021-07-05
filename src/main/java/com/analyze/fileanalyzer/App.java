@@ -33,8 +33,6 @@ public class App {
     private JLabel panelTikaMetadataLabel;
     private JPanel panelSolr;
     private JButton viewAllDataButton;
-    private JTextField solrCollectionNameTextField;
-    private JTextField solrQueryTextField;
     private JPanel panelSolrData;
     private JButton panelSolrDataGoBackButton;
     private JLabel panelSolrDataLabel;
@@ -44,8 +42,15 @@ public class App {
     private JButton viewBgDataButton;
     private JButton viewEnDataButton;
     private JButton viewLogFileButton;
+    private JButton viewLogFileByIPButton;
+    private JPanel panelLogIP;
+    private JLabel ipLabel;
+    private JButton ipButton;
+    private JTextField ipTextField;
+    private JButton ipGoBackButton;
     private JFrame frame;
     private File file;
+    private String previousScreen = "";
 
     Navigation navigation = new Navigation(panelApp);
     SolrExecution solr = new SolrExecution();
@@ -145,6 +150,7 @@ public class App {
                 String collectionName = "test";
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
                 viewSolrData(fileOpen, collectionName, true);
+                previousScreen = "panelMain";
             }
         });
 
@@ -156,7 +162,14 @@ public class App {
 
         panelSolrDataGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelSolr);
+                if (previousScreen.equals("panelMain")) {
+                    navigation.navigateTo(panelMain);
+                }else if (previousScreen.equals("panelLogIP")) {
+                    navigation.navigateTo(panelLogIP);
+                } else {
+                    navigation.navigateTo(panelSolr);
+                }
+                previousScreen = "";
             }
         });
 
@@ -171,6 +184,36 @@ public class App {
                 navigation.navigateTo(panelSolr);
             }
         });
+        viewLogFileByIPButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelLogIP);
+            }
+        });
+        ipButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String ipAddress = ipTextField.getText();
+                if (ipAddress.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter IP address");
+                }
+                try {
+                    FileWriter myWriter = new FileWriter("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt");
+                    myWriter.write("IP_address:" + ipAddress);
+                    myWriter.close();
+                    ipTextField.setText("");
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+                String collectionName = "test";
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt";
+                viewSolrData(fileOpen, collectionName, true);
+                previousScreen = "panelLogIP";
+            }
+        });
+        ipGoBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelMain);
+            }
+        });
     }
 
     public void setButtonIcons() {
@@ -182,6 +225,7 @@ public class App {
         panelTikaGoBackButton.setIcon(backButtonIcon);
         panelSolrGoBackButton.setIcon(backButtonIcon);
         panelSolrDataGoBackButton.setIcon(backButtonIcon);
+        ipGoBackButton.setIcon(backButtonIcon);
         Icon viewAllDataIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\all-data.png");
         viewAllDataButton.setIcon(viewAllDataIcon);
         Icon enIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\en.png");
@@ -190,6 +234,9 @@ public class App {
         viewBgDataButton.setIcon(bgIcon);
         Icon logIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\log.png");
         viewLogFileButton.setIcon(logIcon);
+        ipButton.setIcon(logIcon);
+        Icon logIPIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\ip.png");
+        viewLogFileByIPButton.setIcon(logIPIcon);
     }
 
     public void viewSolrData(String queryFilename, String collectionName, boolean isLogFile) {
