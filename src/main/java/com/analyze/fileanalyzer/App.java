@@ -6,13 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -48,6 +41,8 @@ public class App {
     private JButton ipButton;
     private JTextField ipTextField;
     private JButton ipGoBackButton;
+    private JScrollPane panelTikaPane;
+    private JScrollPane panelSolrPane;
     private JFrame frame;
     private File file;
     private String previousScreen = "";
@@ -64,14 +59,10 @@ public class App {
         frame = new JFrame("File analyzer");
         frame.setSize(620, 410);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        ImageIcon imageBackground = new ImageIcon("D:/WORD/UNI/Магистър/FinalProject/FileAnalyzer/src/main/resources/app-background.jpg");
-//        JLabel background = new JLabel("", imageBackground, JLabel.CENTER);
-//        background.setBounds(0,0,620,410);
-//        frame.add(background);
         frame.setContentPane(panelApp);
-        panelApp.setBackground(Color.BLUE);
         frame.getContentPane().setBackground(new Color(255, 235, 205));
         setButtonIcons();
+        setBackgroundColor();
         helloLabel.setFont(helloLabel.getFont().deriveFont(28.0f));
         frame.setVisible(true);
     }
@@ -244,5 +235,17 @@ public class App {
         ipButton.setIcon(logIcon);
         Icon logIPIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\ip.png");
         viewLogFileByIPButton.setIcon(logIPIcon);
+    }
+
+    public void setBackgroundColor() {
+        Color backgroundColor = new Color(248, 251, 253);
+        Color panelBackgroundColor = new Color(252, 253, 253);
+        panelMain.setBackground(backgroundColor);
+        panelTika.setBackground(backgroundColor);
+        panelSolr.setBackground(backgroundColor);
+        panelSolrData.setBackground(backgroundColor);
+        panelLogIP.setBackground(backgroundColor);
+        panelTikaPane.getViewport().setBackground(panelBackgroundColor);
+        panelSolrPane.getViewport().setBackground(panelBackgroundColor);
     }
 }
