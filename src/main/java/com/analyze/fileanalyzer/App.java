@@ -95,7 +95,6 @@ public class App {
                         ParseContext context = new ParseContext();
                         parser.parse(inputstream, handler, metadata, context);
 
-                        //getting the list of all meta data elements
                         String[] metadataNames = metadata.names();
                         String metadataText = "<html>";
                         for(String name : metadataNames) {
@@ -106,8 +105,6 @@ public class App {
                         panelTikaLabel.setText("The metadata of file " + file.getName());
                         navigation.navigateTo(panelTika);
                         panelTikaMetadataLabel.setText(metadataText);
-//                        databaseQuery.insertQuery("insert into fileanalyzer.tika (filename, metadata) values ('" + file.getName() + "', '" + metadataText + "')", connection);
-//                        databaseQuery.getAllResults(connection);
                     } catch (FileNotFoundException fileNotFoundException) {
                         fileNotFoundException.printStackTrace();
                     } catch (SAXException saxException) {
@@ -118,6 +115,27 @@ public class App {
                         ioException.printStackTrace();
                     }
                 }
+            }
+        });
+
+        ipButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String ipAddress = ipTextField.getText();
+                if (ipAddress.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Please enter IP address");
+                }
+                try {
+                    FileWriter myWriter = new FileWriter("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt");
+                    myWriter.write("IP_address:" + ipAddress);
+                    myWriter.close();
+                    ipTextField.setText("");
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+                String collectionName = "test";
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt";
+                viewSolrData(fileOpen, collectionName, true);
+                previousScreen = "panelLogIP";
             }
         });
 
@@ -154,12 +172,6 @@ public class App {
             }
         });
 
-        panelTikaGoBackButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                navigation.navigateTo(panelMain);
-            }
-        });
-
         panelSolrDataGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (previousScreen.equals("panelMain")) {
@@ -170,6 +182,12 @@ public class App {
                     navigation.navigateTo(panelSolr);
                 }
                 previousScreen = "";
+            }
+        });
+
+        panelTikaGoBackButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                navigation.navigateTo(panelMain);
             }
         });
 
@@ -184,36 +202,25 @@ public class App {
                 navigation.navigateTo(panelSolr);
             }
         });
+
         viewLogFileByIPButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelLogIP);
             }
         });
-        ipButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String ipAddress = ipTextField.getText();
-                if (ipAddress.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Please enter IP address");
-                }
-                try {
-                    FileWriter myWriter = new FileWriter("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt");
-                    myWriter.write("IP_address:" + ipAddress);
-                    myWriter.close();
-                    ipTextField.setText("");
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-                String collectionName = "test";
-                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt";
-                viewSolrData(fileOpen, collectionName, true);
-                previousScreen = "panelLogIP";
-            }
-        });
+
         ipGoBackButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 navigation.navigateTo(panelMain);
             }
         });
+    }
+
+    public void viewSolrData(String queryFilename, String collectionName, boolean isLogFile) {
+        String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
+
+        panelSolrIndexedDataLabel.setText(text);
+        navigation.navigateTo(panelSolrData);
     }
 
     public void setButtonIcons() {
@@ -237,12 +244,5 @@ public class App {
         ipButton.setIcon(logIcon);
         Icon logIPIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\ip.png");
         viewLogFileByIPButton.setIcon(logIPIcon);
-    }
-
-    public void viewSolrData(String queryFilename, String collectionName, boolean isLogFile) {
-        String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
-
-        panelSolrIndexedDataLabel.setText(text);
-        navigation.navigateTo(panelSolrData);
     }
 }
