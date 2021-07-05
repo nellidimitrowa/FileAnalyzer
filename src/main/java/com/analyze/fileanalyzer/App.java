@@ -43,6 +43,7 @@ public class App {
     private JComboBox collectionNameComboBox;
     private JButton viewBgDataButton;
     private JButton viewEnDataButton;
+    private JButton viewLogFileButton;
     private JFrame frame;
     private File file;
 
@@ -117,22 +118,33 @@ public class App {
 
         viewAllDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
-                viewSolrData(fileOpen);
+                viewSolrData(fileOpen, collectionName, false);
             }
         });
 
         viewBgDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryBG.txt";
-                viewSolrData(fileOpen);
+                viewSolrData(fileOpen, collectionName, false);
             }
         });
 
         viewEnDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String collectionName = collectionNameComboBox.getSelectedItem().toString();
                 String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryEN.txt";
-                viewSolrData(fileOpen);
+                viewSolrData(fileOpen, collectionName, false);
+            }
+        });
+
+        viewLogFileButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String collectionName = "test";
+                String fileOpen = "D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryAll.txt";
+                viewSolrData(fileOpen, collectionName, true);
             }
         });
 
@@ -176,12 +188,11 @@ public class App {
         viewEnDataButton.setIcon(enIcon);
         Icon bgIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\bg.png");
         viewBgDataButton.setIcon(bgIcon);
+        Icon logIcon = new ImageIcon("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\icons\\log.png");
+        viewLogFileButton.setIcon(logIcon);
     }
 
-    public void viewSolrData(String queryFilename) {
-        String collectionName = collectionNameComboBox.getSelectedItem().toString();
-        boolean isLogFile = false;
-        if(collectionName == "test") isLogFile = true;
+    public void viewSolrData(String queryFilename, String collectionName, boolean isLogFile) {
         String text = solr.executeSolr(queryFilename, collectionName, isLogFile);
 
         panelSolrIndexedDataLabel.setText(text);

@@ -35,7 +35,6 @@ public class SolrExecution {
                 }
             }
             text.concat("</html>");
-            System.out.println(text);
             if(text == "<html>") {
                 text = "<html>There is no data for this option in our database.<br>Please, try another option.</html>";
             }
