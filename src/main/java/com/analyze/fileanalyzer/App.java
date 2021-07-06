@@ -63,7 +63,7 @@ public class App {
         frame.getContentPane().setBackground(new Color(255, 235, 205));
         setButtonIcons();
         setBackgroundColor();
-        helloLabel.setFont(helloLabel.getFont().deriveFont(28.0f));
+        helloLabel.setFont(new Font("Constantia", Font.PLAIN, 28));
         frame.setVisible(true);
     }
 
@@ -113,7 +113,7 @@ public class App {
             public void actionPerformed(ActionEvent e) {
                 String ipAddress = ipTextField.getText();
                 if (ipAddress.equals("")) {
-                    JOptionPane.showMessageDialog(null, "Please enter IP address");
+                    JOptionPane.showMessageDialog(null, "Please enter IP address", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 try {
                     FileWriter myWriter = new FileWriter("D:\\WORD\\UNI\\mag\\FinalProject\\FileAnalyzer\\src\\main\\resources\\queryLogByIP.txt");
